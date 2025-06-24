@@ -2,31 +2,105 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>대구대 KMOOC 소행심</title>
   <style>
-    /* 기본 박스 사이징 */
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background-color: #f0f4f8; margin: 0; padding: 2rem; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-size: 1.1rem; }
-    .container { background-color: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); max-width: 520px; width: 100%; }
-    h2 { font-size: 1.6rem; text-align: center; margin-bottom: 0.5rem; }
-    .subtext { font-size: 1rem; color: #555; text-align: center; margin-bottom: 2rem; }
-    label { display: block; margin-top: 1.2rem; font-weight: 600; font-size: 1.1rem; }
-    input { width: 100%; padding: 0.8rem; font-size: 1.1rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 6px; }
-    button { margin-top: 1rem; width: 100%; padding: 0.8rem; background-color: #0078d4; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
-    button:disabled { background-color: #aaa; cursor: not-allowed; }
-    #result { margin-top: 1.5rem; padding: 1rem; background-color: #eef4ff; border-left: 6px solid #0078d4; border-radius: 10px; font-size: 1.1rem; color: #003366; line-height: 1.6; white-space: pre-line; }
-    .hidden { display: none; }
-    .loader { font-size: 0.95rem; color: #888; margin-top: 0.5rem; text-align: center; }
-    .contact { margin-top: 2.5rem; text-align: center; font-size: 0.95rem; color: #555; }
-    .contact span { font-weight: bold; cursor: pointer; user-select: all; }
-    #adminSection { margin-top: 2rem; }
-    #contactLoader { font-size: 0.85rem; color: #888; margin-left: 0.5rem; display: none; }
-    #openSheetBtn { background-color: #28a745; margin-top: 0.5rem; }
-    /* 모바일 레이아웃 조정 */
-    @media (max-width: 600px) {
-      body { padding: 1rem; align-items: flex-start; }
-      .container { padding: 1.5rem; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-size: 1.1rem;
+    }
+    .container {
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      max-width: 520px;
+      width: 100%;
+    }
+    h2 {
+      font-size: 1.6rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .subtext {
+      font-size: 1rem;
+      color: #555;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    #result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #eef4ff;
+      border-left: 6px solid #0078d4;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      color: #003366;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    .hidden {
+      display: none;
+    }
+    .loader {
+      font-size: 0.95rem;
+      color: #888;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+    .contact {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .contact span {
+      font-weight: bold;
+      cursor: pointer;
+      user-select: all;
+    }
+    #contactLoader {
+      font-size: 0.85rem;
+      color: #888;
+      margin-left: 0.5rem;
+      display: none;
     }
   </style>
 </head>
@@ -48,25 +122,15 @@
       <button id="saveBtn">저장</button>
     </div>
 
-    <!-- 관리자용 이메일 편집 섹션 -->
-    <div id="adminSection" class="hidden">
-      <label for="adminEmailInput">문의사항 이메일 수정</label>
-      <input type="email" id="adminEmailInput" placeholder="관리자 이메일 입력" />
-      <button id="adminSaveBtn">저장</button>
-      <button id="openSheetBtn">KMOOC 이메일 DB 열기</button>
-      <span id="contactLoader">(로딩 중...)</span>
-    </div>
-
     <hr style="margin:2.5rem 0 1rem" />
     <p class="contact">
-      문의사항: <span id="contactEmail"></span><br />
+      문의사항: <span id="contactEmail"></span><span id="contactLoader">(로딩 중...)</span><br />
       <small>클릭 또는 복사하세요</small>
     </p>
   </div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbzpgOknURiuHpduRzHPYux087y7p7xI1sR4OAzEsSLOyE00E8P-sxpEV4f9cExwCv2W/exec";
-    const sheetLink = "https://docs.google.com/spreadsheets/d/1fq5QGVfkx7mQoe4vn0H8ZDeLuiaIxIiAxOgH7ca0RHU/edit?usp=sharing";
     const idRegex = /^\d{8}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -78,15 +142,11 @@
     const result = document.getElementById("result");
     const emailSection = document.getElementById("emailSection");
     const contactEmail = document.getElementById("contactEmail");
-    const adminSection = document.getElementById("adminSection");
-    const adminEmailInput = document.getElementById("adminEmailInput");
-    const adminSaveBtn = document.getElementById("adminSaveBtn");
     const contactLoader = document.getElementById("contactLoader");
-    const openSheetBtn = document.getElementById("openSheetBtn");
 
     function toggleLoader(show) {
       loader.classList.toggle("hidden", !show);
-      checkBtn.disabled = saveBtn.disabled = adminSaveBtn.disabled = show;
+      checkBtn.disabled = saveBtn.disabled = show;
     }
 
     function displayMessage(msg, isError = false) {
@@ -95,41 +155,39 @@
       result.classList.remove("hidden");
     }
 
-    // Enter 키로 조회/저장
-    studentId.addEventListener("keydown", e => { if (e.key === "Enter") checkBtn.click(); });
-    newEmail.addEventListener("keydown", e => { if (e.key === "Enter") saveBtn.click(); });
-    adminEmailInput.addEventListener("keydown", e => { if (e.key === "Enter") adminSaveBtn.click(); });
-
-    // 관리자 이메일 로드
+    // 문의 이메일 불러오기
     function loadAdminEmail() {
       contactEmail.textContent = '잠시 후 이메일이 나타납니다';
       contactLoader.style.display = 'inline';
       fetch(`${scriptURL}?mode=adminEmail`)
         .then(res => res.json())
-        .then(data => { contactEmail.textContent = data.adminEmail || '관리자 이메일 없음'; })
-        .catch(() => { contactEmail.textContent = '불러오기 실패'; })
-        .finally(() => { contactLoader.style.display = 'none'; });
+        .then(data => {
+          contactEmail.textContent = data.adminEmail || '관리자 이메일 없음';
+        })
+        .catch(() => {
+          contactEmail.textContent = '불러오기 실패';
+        })
+        .finally(() => {
+          contactLoader.style.display = 'none';
+        });
     }
 
-    // 조회 핸들러
+    // 학번 조회
     checkBtn.addEventListener("click", () => {
       const id = studentId.value.trim();
-      if (id === "admin소행심") {
-        adminSection.classList.remove("hidden");
-        emailSection.classList.add("hidden");
-        result.classList.add("hidden");
-        adminEmailInput.value = contactEmail.textContent;
-        return;
-      }
       if (!idRegex.test(id)) return alert("학번은 8자리 숫자여야 합니다.");
-      adminSection.classList.add("hidden");
+
       result.classList.add("hidden");
       emailSection.classList.add("hidden");
       toggleLoader(true);
+
       fetch(`${scriptURL}?id=${encodeURIComponent(id)}`)
         .then(res => res.json())
         .then(data => {
-          if (data.error) { displayMessage(`❌ ${data.error}`, true); return; }
+          if (data.error) {
+            displayMessage(`❌ ${data.error}`, true);
+            return;
+          }
           if (!data.email) {
             displayMessage("등록된 이메일이 없습니다. KMOOC 이메일을 등록해주세요");
           } else {
@@ -144,40 +202,33 @@
         .finally(() => toggleLoader(false));
     });
 
-    // 사용자 이메일 저장
+    // 이메일 저장
     saveBtn.addEventListener("click", () => {
-      const id = studentId.value.trim(); const email = newEmail.value.trim();
+      const id = studentId.value.trim();
+      const email = newEmail.value.trim();
       if (!idRegex.test(id) || !email) return alert("학번과 이메일을 모두 올바르게 입력해주세요.");
       if (!emailRegex.test(email)) return alert("올바른 이메일 형식을 입력해주세요.");
-      displayMessage("⏳ 서버에 저장 중입니다..."); toggleLoader(true);
-      fetch(scriptURL, { method: 'POST', body: new URLSearchParams({ id, email }) })
+
+      displayMessage("⏳ 서버에 저장 중입니다...");
+      toggleLoader(true);
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: new URLSearchParams({ id, email })
+      })
         .then(res => res.json())
         .then(data => {
           if (data.error) displayMessage(`❌ ${data.error}`, true);
           else if (data.status === 'updated') displayMessage("✅ 이메일이 성공적으로 수정되었습니다.");
           else if (data.status === 'appended') displayMessage("✅ 이메일이 성공적으로 등록되었습니다.");
-          emailSection.classList.add("hidden"); newEmail.value = '';
+          emailSection.classList.add("hidden");
+          newEmail.value = '';
         })
         .catch(() => displayMessage("저장 중 오류가 발생했습니다.", true))
         .finally(() => toggleLoader(false));
     });
 
-    // 관리자 이메일 저장
-    adminSaveBtn.addEventListener("click", () => {
-      const newAdmin = adminEmailInput.value.trim();
-      if (!emailRegex.test(newAdmin)) return alert("올바른 이메일 형식을 입력해주세요.");
-      contactLoader.style.display = 'inline';
-      fetch(scriptURL, { method: 'POST', body: new URLSearchParams({ mode: 'adminEmail', email: newAdmin }) })
-        .then(res => res.json())
-        .then(data => { if (data.error) alert(data.error); else { alert("관리자 이메일이 업데이트되었습니다."); contactEmail.textContent = data.adminEmail; } adminSection.classList.add("hidden"); })
-        .catch(() => alert("업데이트 중 오류가 발생했습니다."))
-        .finally(() => contactLoader.style.display = 'none');
-    });
-
-    // 스프레드시트 열기
-    openSheetBtn.addEventListener("click", () => window.open(sheetLink, '_blank'));
-
-    // 이메일 복사
+    // 이메일 클릭 시 복사
     contactEmail.addEventListener("click", () => {
       navigator.clipboard.writeText(contactEmail.textContent)
         .then(() => alert("이메일 주소가 복사되었습니다."))
