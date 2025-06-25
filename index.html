@@ -109,6 +109,25 @@
     <h2>본인 학번으로 KMOOC 이메일 조회 및 등록</h2>
     <p class="subtext">등록된 이메일은 KMOOC 성적부 확인 및 중간고사 채점에 활용됩니다.</p>
 
+    <!-- 🔽 이미지 안내 섹션 시작 -->
+    <div id="imageGuideSection" style="text-align: center;">
+      <p id="guideText" style="margin-bottom: 1rem; color: #333;">
+        본인 KMOOC 이메일은 다음과 같이 확인할 수 있습니다.
+      </p>
+      <img
+        id="guideImage"
+        src="./im1.png"
+        alt="이메일 확인 예시"
+        style="max-width: 100%; border-radius: 10px; border: 1px solid #ccc;"
+      />
+      <button
+        id="toggleBtn"
+        style="margin-top: 1.5rem; background-color: #28a745; color: white; padding: 0.8rem; width: 100%; border: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; cursor: pointer;">
+        성적부 확인 방법
+      </button>
+    </div>
+    <!-- 🔼 이미지 안내 섹션 끝 -->
+
     <label for="studentId">학번</label>
     <input type="text" id="studentId" placeholder="8자리 숫자 입력 (예: 12345678)" maxlength="8" />
     <button id="checkBtn">조회</button>
@@ -155,7 +174,6 @@
       result.classList.remove("hidden");
     }
 
-    // 문의 이메일 불러오기
     function loadAdminEmail() {
       contactEmail.textContent = '잠시 후 이메일이 나타납니다';
       contactLoader.style.display = 'inline';
@@ -172,7 +190,6 @@
         });
     }
 
-    // 학번 조회
     checkBtn.addEventListener("click", () => {
       const id = studentId.value.trim();
       if (!idRegex.test(id)) return alert("학번은 8자리 숫자여야 합니다.");
@@ -202,7 +219,6 @@
         .finally(() => toggleLoader(false));
     });
 
-    // 이메일 저장
     saveBtn.addEventListener("click", () => {
       const id = studentId.value.trim();
       const email = newEmail.value.trim();
@@ -228,11 +244,29 @@
         .finally(() => toggleLoader(false));
     });
 
-    // 이메일 클릭 시 복사
     contactEmail.addEventListener("click", () => {
       navigator.clipboard.writeText(contactEmail.textContent)
         .then(() => alert("이메일 주소가 복사되었습니다."))
         .catch(() => alert("복사에 실패했습니다."));
+    });
+
+    // 이미지 토글 기능
+    const guideImage = document.getElementById("guideImage");
+    const guideText = document.getElementById("guideText");
+    const toggleBtn = document.getElementById("toggleBtn");
+    let showingEmailGuide = true;
+
+    toggleBtn.addEventListener("click", () => {
+      if (showingEmailGuide) {
+        guideImage.src = "./image2.png";
+        guideText.textContent = "본인의 KMOOC 성적부는 다음과 같이 확인할 수 있습니다.";
+        toggleBtn.textContent = "KMOOC 이메일 확인 방법";
+      } else {
+        guideImage.src = "./im1.png";
+        guideText.textContent = "본인 KMOOC 이메일은 다음과 같이 확인할 수 있습니다.";
+        toggleBtn.textContent = "성적부 확인 방법";
+      }
+      showingEmailGuide = !showingEmailGuide;
     });
 
     window.addEventListener('DOMContentLoaded', loadAdminEmail);
