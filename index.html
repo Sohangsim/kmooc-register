@@ -2,53 +2,63 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>대구대 KMOOC 소행심</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0f4f8;
       margin: 0;
-      padding: 2rem;
+      padding: 1rem;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
+
     .container {
       background-color: white;
-      padding: 2.5rem;
+      padding: 2rem;
       border-radius: 20px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      max-width: 520px;
+      max-width: 500px;
       width: 100%;
     }
+
     h2 {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       text-align: center;
       margin-bottom: 0.5rem;
+      word-break: keep-all;
     }
+
     .subtext {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #555;
       text-align: center;
       margin-bottom: 2rem;
+      word-break: keep-all;
     }
+
     label {
       display: block;
       margin-top: 1.2rem;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
+
     input {
       width: 100%;
-      padding: 0.8rem;
-      font-size: 1.1rem;
+      padding: 0.75rem;
+      font-size: 1rem;
       margin-top: 0.3rem;
       border: 1px solid #ccc;
       border-radius: 6px;
-      box-sizing: border-box;
     }
+
     button {
       margin-top: 1rem;
       width: 100%;
@@ -58,49 +68,74 @@
       border: none;
       border-radius: 6px;
       font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 1rem;
       cursor: pointer;
     }
+
     button:disabled {
       background-color: #aaa;
       cursor: not-allowed;
     }
+
     #result {
       margin-top: 1.5rem;
       padding: 1rem;
       background-color: #eef4ff;
       border-left: 6px solid #0078d4;
       border-radius: 10px;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       color: #003366;
-      line-height: 1.6;
+      line-height: 1.5;
       white-space: pre-line;
     }
-    .hidden {
-      display: none;
-    }
+
+    .hidden { display: none; }
+
     .loader {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #888;
       margin-top: 0.5rem;
       text-align: center;
     }
+
     .contact {
-      margin-top: 2.5rem;
+      margin-top: 2rem;
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #555;
+      word-break: break-word;
     }
+
     .contact span {
       font-weight: bold;
       cursor: pointer;
       user-select: all;
     }
+
     #contactLoader {
       font-size: 0.85rem;
       color: #888;
       margin-left: 0.5rem;
       display: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    @media screen and (max-width: 480px) {
+      h2 {
+        font-size: 1.2rem;
+      }
+      .subtext, label, input, button {
+        font-size: 0.95rem;
+      }
+      .container {
+        padding: 1.5rem 1rem;
+      }
     }
   </style>
 </head>
@@ -109,24 +144,15 @@
     <h2>본인 학번으로 KMOOC 이메일 조회 및 등록</h2>
     <p class="subtext">등록된 이메일은 KMOOC 성적부 확인 및 중간고사 채점에 활용됩니다.</p>
 
-    <!-- 🔽 이미지 안내 섹션 시작 -->
     <div id="imageGuideSection" style="text-align: center;">
       <p id="guideText" style="margin-bottom: 1rem; color: #333;">
         본인 KMOOC 이메일은 다음과 같이 확인할 수 있습니다.
       </p>
-      <img
-        id="guideImage"
-        src="./im1.png"
-        alt="이메일 확인 예시"
-        style="max-width: 100%; border-radius: 10px; border: 1px solid #ccc;"
-      />
-      <button
-        id="toggleBtn"
-        style="margin-top: 1.5rem; background-color: #28a745; color: white; padding: 0.8rem; width: 100%; border: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; cursor: pointer;">
+      <img id="guideImage" src="./im1.png" alt="이메일 확인 예시" />
+      <button id="toggleBtn" style="margin-top: 1.5rem; background-color: #28a745;">
         성적부 확인 방법
       </button>
     </div>
-    <!-- 🔼 이미지 안내 섹션 끝 -->
 
     <label for="studentId">학번</label>
     <input type="text" id="studentId" placeholder="8자리 숫자 입력 (예: 12345678)" maxlength="8" />
@@ -141,7 +167,7 @@
       <button id="saveBtn">저장</button>
     </div>
 
-    <hr style="margin:2.5rem 0 1rem" />
+    <hr style="margin:2rem 0 1rem" />
     <p class="contact">
       문의사항: <span id="contactEmail"></span><span id="contactLoader">(로딩 중...)</span><br />
       <small>클릭 또는 복사하세요</small>
@@ -250,7 +276,6 @@
         .catch(() => alert("복사에 실패했습니다."));
     });
 
-    // 이미지 토글 기능
     const guideImage = document.getElementById("guideImage");
     const guideText = document.getElementById("guideText");
     const toggleBtn = document.getElementById("toggleBtn");
