@@ -258,13 +258,13 @@
 
     toggleBtn.addEventListener("click", () => {
       if (showingEmailGuide) {
-        guideImage.src = "./image2.png";
+        guideImage.src = "./im2.png";
         guideText.textContent = "본인의 KMOOC 성적부는 다음과 같이 확인할 수 있습니다.";
-        toggleBtn.textContent = "KMOOC 이메일 확인 방법";
+        toggleBtn.textContent = "KMOOC 이메일 확인 방법 보기";
       } else {
         guideImage.src = "./im1.png";
         guideText.textContent = "본인 KMOOC 이메일은 다음과 같이 확인할 수 있습니다.";
-        toggleBtn.textContent = "성적부 확인 방법";
+        toggleBtn.textContent = "성적부 확인 방법 보기";
       }
       showingEmailGuide = !showingEmailGuide;
     });
